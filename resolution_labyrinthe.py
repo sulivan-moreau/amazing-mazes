@@ -1,7 +1,9 @@
-M = [ [3, 1, 5], [9, 8, -1], [10, 12, 2] ]
-#imprimer("M =", M)
-print("M[0] =", M[0]) # 2ème ligne
-print("M[1] =", M[1]) # 2ème ligne
-print("M[1][2] =", M[1][2]) # 3ème élément de la 2ème ligne
-print("A[0][-1] =", M[0][-1]) # dernier élément de 1ère ligne
-print("A[0][-1] =", M[-1][0]) # dernier élément de 1ère ligne
+import generation_matrice
+
+def liste_voisin():
+    n,p = len(mat), len(mat[0])
+    (a,b) = sommet 
+    logigue_chemin = [(a+1, b), (a-1, b), (a, b+1), (a, b-1)]
+    tester_voisin = [i, j] for (i,j) in logigue_chemin if 0<=i<n and 0<=j<p and mat[i,j] == "#"]
+    return tester_voisin 
+print(liste_voisin(mat,))
