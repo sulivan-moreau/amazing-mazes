@@ -12,9 +12,8 @@ def create_list():
     for ligne in matrice:
         print(ligne,"\n")
 
-    with open(name_file, 'w') as file:
+    with open(f'{name_file}.txt', 'w') as file:
         for ligne in matrice:
-            for i in ligne:
-                file.write(''.join(i) + '\n')
+            file.write(''.join(ligne) + '\n')
                 
 create_list()
