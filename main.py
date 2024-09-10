@@ -1,8 +1,4 @@
-import generation_matrice 
-import resolution_labyrinthe
+import generation_matrice
 
-
-
-generation_matrice.generation()
-
-resolution_labyrinthe.liste_voisin()
+mat = generation_matrice.generation()
+generation_matrice.sauvegarde_fichier(mat)
