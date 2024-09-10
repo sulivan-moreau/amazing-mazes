@@ -1,32 +1,40 @@
 import os
 import time
 
-# Inilialization of basics variables
-wall = "#"
-floor = "."
-spawn = "S"
-exit = "E"
+# Initialization of basic constants
+WALL = "#"
+FLOOR = "."
+SPAWN = "S"
+EXIT = "E"
 
-def matrix():
-    input_user = int(input("Enter number to generate matrix : "))
-    border = [wall] * (input_user * 2 + 1)
-    spawn_line = [wall] + [spawn] + (((input_user - 1) * 2) * [floor]) + [wall]
-    exit_line = [wall] + (((input_user - 1) * 2) * [floor]) + [exit] + [wall]
-    basic_line = [wall] + ((input_user * 2 - 1) * [floor]) + [wall]
-    matrix = [border] + [spawn_line] + (input_user +1) * [basic_line] + [exit_line] + [border]
-    file_name = input("Write the name of your map without space : ")
-    file = open(f"{file_name}.txt", "a")
-    for line in matrix:
-        file.write("".join(line) + "\n")
-    file.close()
+def generate_matrix():
+    # Input User
+    matrix_size = int(input("Enter number to generate matrix: "))
+
+    # Different lines to generate matrix template 
+    border_line = [WALL] * (matrix_size * 2 + 1)
+    spawn_line = [WALL] + [SPAWN] + (((matrix_size - 1) * 2) * [FLOOR]) + [WALL]
+    exit_line = [WALL] + (((matrix_size - 1) * 2) * [FLOOR]) + [EXIT] + [WALL]
+    empty_line = [WALL] + ((matrix_size * 2 - 1) * [FLOOR]) + [WALL]
+    matrix = [border_line] + [spawn_line] + (matrix_size - 1) * [empty_line] + [exit_line] + [border_line]
+
+    # Save template in file text
+    file_name = input("Write the name of your map without spaces: ")
+    with open(f"{file_name}.txt", "a") as file:
+        for line in matrix:
+            file.write("".join(line) + "\n")
+    
     return file_name
 
 def remove(file_name):
     path = f"{file_name}.txt"
-    os.remove (path)
-    print(f"{file_name}' has been remove")
+    if os.path.isfile(path):
+        os.remove(path)
+        print(f"{file_name}.txt has been removed")
+    else:
+        print(f"{file_name}.txt does not exist")
 
 if __name__ == "__main__":
-    name_matrix = matrix()
+    name_matrix = generate_matrix()
     time.sleep(10)
     remove(name_matrix)
