@@ -1,8 +1,6 @@
 import random
-import colorama
 from colorama import Fore, Style
 
-colorama.init(autoreset=True)
 
 def generation_matrice():
     mur = "#"
@@ -50,7 +48,7 @@ def obtenir_voisins(mat, x, y):
 
 def sauvegarde_fichier(mat):
     nom_fichier = input("Nom du fichier de sauvegarde : ")
-    with open(nom_fichier + ".txt", "w") as fichier:
+    with open(f"{nom_fichier}.txt", "w") as fichier:
         for ligne in mat:
             fichier.write(" ".join(ligne) + "\n")
 
