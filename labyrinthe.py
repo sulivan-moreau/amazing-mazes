@@ -21,8 +21,9 @@ def generation_matrice():
     generer_chemin_backtracking(mat, 1, 1)
 
     afficher_matrice(mat)
-
+    sauvegarde_fichier(mat)
     return mat
+
 
 def generer_chemin_backtracking(mat, x, y):
     pile = [(x, y)]
@@ -37,20 +38,23 @@ def generer_chemin_backtracking(mat, x, y):
             mat[(x + nx) // 2][(y + ny) // 2] = "."
             pile.append((nx, ny))
 
+
 def obtenir_voisins(mat, x, y):
-    directions = [(0, 2), (2, 0), (0, -2), (-2, 0)]  # droite, bas, gauche, haut
+    directions = [(0, 2), (2, 0), (0, -2), (-2, 0)]  # droite bas gauche haut
     voisins = []
     for dx, dy in directions:
         nx, ny = x + dx, y + dy
-        if 0 <= nx < len(mat) and 0 <= ny < len(mat) and mat[nx][ny] == "#":
+        if 1 <= nx < len(mat) and 1 <= ny < len(mat) and mat[nx][ny] == "#":
             voisins.append((nx, ny))
     return voisins
+
 
 def sauvegarde_fichier(mat):
     nom_fichier = input("Nom du fichier de sauvegarde : ")
     with open(f"{nom_fichier}.txt", "w") as fichier:
         for ligne in mat:
             fichier.write(" ".join(ligne) + "\n")
+
 
 def afficher_matrice(mat):
     for ligne in mat:
@@ -61,6 +65,3 @@ def afficher_matrice(mat):
             else:
                 ligne_affichee += cellule
         print(ligne_affichee)
-
-mat = generation_matrice()
-sauvegarde_fichier(mat)
