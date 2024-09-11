@@ -1,11 +1,20 @@
 import os
 import time
+import random
 
 # Initialization of basic constants
 WALL = "#"
 FLOOR = "."
 SPAWN = "S"
 EXIT = "E"
+
+def intialize_matrix(matrix_size):
+    maze = [[WALL for _ in range (matrix_size * 2 + 1)] for _ in range (matrix_size * 2 + 1)]
+    return maze
+
+def recursive_backtrack(maze, x, y):
+    maze[y][x] = FLOOR
+
 
 def generate_matrix():
     # Input User
