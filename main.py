@@ -21,8 +21,7 @@ def get_matrix_size():
         return get_matrix_size()
 
 
-def generate_maze():
-    n = get_matrix_size()
+def generate_maze(n):
     m = []
     for _ in range(n * 2 + 1):
         m.append([CHAR_WALL] * (n * 2 + 1))
@@ -49,9 +48,11 @@ def print_maze(maze):
 
 
 def main():
-    maze = generate_maze()
+    n = get_matrix_size()
+    maze = generate_maze(n)
     print_maze(maze)
     save_file(maze)
+
 
 
 if __name__ == "__main__":
