@@ -1,3 +1,4 @@
+import random
 # from colorama import Fore, Style
 CHAR_GROUND = "."
 CHAR_WALL = "#"
@@ -20,8 +21,7 @@ def get_matrix_size():
         # print(error)
         return get_matrix_size()
 
-
-def generate_maze(n):
+def generate_basic_matrix(n): 
     m = []
     for _ in range(n * 2 + 1):
         m.append([CHAR_WALL] * (n * 2 + 1))
@@ -34,6 +34,21 @@ def generate_maze(n):
 
     return m
 
+
+
+def generate_maze(n):
+    # La parti récursive doit pas être à chaque fois m 
+    m = generate_basic_matrix(n)
+    directions = [(2,0),(-2,0),(0,-2),(0,2)]
+    random.shuffle(directions)
+    print(directions)
+    pos = [1,1]
+    for dx, dy in directions:
+        pos[0] += dx
+        pos[1] += dy
+        if m[pos[0]][pos[1]] == CHAR_WALL:
+            m[0][1] = CHAR_GROUND
+        
 
 def save_file(m):
     file_name = input("Write the name of your map without spaces: ")
@@ -52,7 +67,6 @@ def main():
     maze = generate_maze(n)
     print_maze(maze)
     save_file(maze)
-
 
 
 if __name__ == "__main__":
