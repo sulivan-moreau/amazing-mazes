@@ -48,7 +48,14 @@ def generate_maze(n):
         pos[1] += dy
         if m[pos[0]][pos[1]] == CHAR_WALL:
             m[0][1] = CHAR_GROUND
-        
+
+def valid_neighbor(mat, x, y):
+     matrix_size = len(mat)
+     return 1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and mat[x][y] == "#"
+
+ if voisin_valide(mat, nx, ny):
+             mat[x + dx // 2][y + dy // 2] = "."
+             mat[nx][ny] = "."
 
 def save_file(m):
     file_name = input("Write the name of your map without spaces: ")
