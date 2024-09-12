@@ -1,7 +1,7 @@
 import random
 from colorama import Fore, Style
 
-
+        
 def generation_matrice():
     mur = "#"
     entree = "E"
@@ -12,9 +12,9 @@ def generation_matrice():
 
     mat = [[mur for _ in range(taille_mat)] for _ in range(taille_mat)]
 
-    for i in range(taille_mat):
-        mat[0][i] = mat[taille_mat - 1][i] = mat[i][0] = mat[i][taille_mat - 1] = mur
-
+    # for i in range(taille_mat):
+    #     mat[0][i] = mat[taille_mat - 1][i] = mat[i][0] = mat[i][taille_mat - 1] = mur
+        
     mat[1][1] = entree
     mat[taille_mat - 2][taille_mat - 2] = sortie
 
@@ -29,6 +29,7 @@ def generer_chemin_backtracking(mat, x, y):
     pile = [(x, y)]
     while pile:
         x, y = pile[-1]
+        # print(pile)
         voisins = obtenir_voisins(mat, x, y)
         if not voisins:
             pile.pop()
