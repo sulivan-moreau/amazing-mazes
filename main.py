@@ -30,42 +30,41 @@ def generate_basic_matrix(n):
 
 def generate_maze(n):
     m = generate_basic_matrix(n)
-    pos = [1, 1]
-    stack = [(pos[0], pos[1])]
+    x, y = 1,1   
     
-    def maze_rec(rank):
-        print(stack)
-        
-        while stack:
-            if pos == [n * 2, n * 2] or rank == 50:
-                return
-            random.shuffle(DIRECTIONS)
-            
-            for dx, dy in DIRECTIONS:
-                new_pos = [pos[0] + dy, pos[1] + dx]
-                if valid_neighbor(m, new_pos[0], new_pos[1], rank) == True:
-                    m[new_pos[0]][new_pos[1]] = CHAR_GROUND
-                    m[(pos[0] + new_pos[0]) // 2][(pos[1] + new_pos[1]) // 2] = CHAR_GROUND
-                    pos[0], pos[1] = new_pos[0], new_pos[1]
-                    stack.append((new_pos[0], new_pos[1]))
-                    print(stack)
-                    maze_rec(rank + 1)
-                    return rank
-                
-                else:
-                    stack.pop()
-                    print(stack)
-                    maze_rec(rank + 1)
-                    return rank
+    def maze_rec(x, y, rank):
+        print(m[2 * n -1][2 *n - 1])
+        if x == n * 2 - 1 and y == n * 2 - 1:
+            print("ENNNNDD")
+            return True
 
-    maze_rec(0)
+        random.shuffle(DIRECTIONS)
+        m[x][y] = CHAR_GROUND
+        
+        for dx, dy in DIRECTIONS:
+            new_pos = [x + dx, y+ dy]
+            if valid_neighbor(m, new_pos[0], new_pos[1], rank):
+
+                m[x + dx // 2][y + dy // 2] = CHAR_GROUND
+                # pos[0], pos[1] = new_pos[0], new_pos[1]
+                if maze_rec(new_pos[0],new_pos[1],rank + 1):
+                    return True
+
+                # return rank
+            # elif new_pos == [n * 2-1 , n * 2-1]:
+            #     m[new_pos[0] - dx // 2][new_pos[1] - dy // 2] = CHAR_GROUND
+            #     print("sdfghjik")
+        return False
+    maze_rec(1, 1, 0)
     return m
 
 def valid_neighbor(m, x, y, rank):
     matrix_size = len(m)
-    print("Étape ", rank, " : X [", x, "]" "  Y [", y, "]")
+    # val = 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
+    print("Étape ", rank, " : X=", x, ", Y=", y)
+
     return (
-        1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and m[x][y] == CHAR_WALL
+        0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
     )
 
 
