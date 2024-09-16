@@ -1,21 +1,24 @@
 import random
-from colorama import Fore, Style
+
+# from colorama import Fore, Style
 CHAR_GROUND = "."
 CHAR_WALL = "#"
-DIRECTIONS = [(2,0),(-2,0),(0,-2),(0,2)]
+DIRECTIONS = [(2, 0), (-2, 0), (0, -2), (0, 2)]
+
 
 def get_matrix_size():
     while True:
         try:
             n = int(input("Size : "))
-            print(type(n))
+            print(type(n), "Le nombre n est égal à :", n)
             return n
         except Exception:
-            print(f"{Fore.RED}To enter the map size please enter a number{Style.RESET_ALL}")
-        
-def generate_basic_matrix(n): 
+            print("To enter the map size please enter a number")
+
+
+def generate_basic_matrix(n):
     m = []
-    print(range (n*2),type(n),"Print de NNNN")
+    print(range(n * 2), type(n), "Print de NNNN")
     for _ in range(n * 2 + 1):
         m.append([CHAR_WALL] * (n * 2 + 1))
 
@@ -29,30 +32,34 @@ def generate_basic_matrix(n):
 
 
 def generate_maze(n):
-    # La parti récursive doit pas être à chaque fois m 
+    # La parti récursive doit pas être à chaque fois m
     m = generate_basic_matrix(n)
-    print(n,"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    pos = [1,1]
-    
+    print(n, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    pos = [1, 1]
+
     def maze_rec(rank):
-        if pos == [n*2,n*2] or rank == 50:
+        if pos == [n * 2, n * 2] or rank == 50:
             return
         random.shuffle(DIRECTIONS)
         for dx, dy in DIRECTIONS:
-            pos[0] += dx
-            pos[1] += dy
-            if valid_neighbor(m,pos[0], pos[1]) == True:   
-                m[0][1] = CHAR_GROUND
-                maze_rec(rank+1)
-                
+            new_pos = [pos[0] + dy, pos[1] + dx]
+            if valid_neighbor(m, new_pos[0], new_pos[1]) == True:
+                m[new_pos[0]][new_pos[1]] = CHAR_GROUND
+                m[(pos[0] + new_pos[0]) // 2][(pos[1] + new_pos[1]) // 2] = CHAR_GROUND
+                pos[0], pos[1] = new_pos[0], new_pos[1]
+
+                maze_rec(rank + 1)
+
     maze_rec(0)
     return m
 
+
 def valid_neighbor(m, x, y):
     matrix_size = len(m)
-    print(x,y,"XXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYYYYYYY")
-    return 1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and m[x][y] == CHAR_WALL
-
+    print(x, y, "XXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYYYYYYY")
+    return (
+        1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and m[x][y] == CHAR_WALL
+    )
 
 
 def save_file(m):
@@ -60,6 +67,7 @@ def save_file(m):
     with open(f"{file_name}.txt", "a") as file:
         for ligne in m:
             file.write("".join(ligne) + "\n")
+
 
 def print_maze(maze):
     for line in maze:
