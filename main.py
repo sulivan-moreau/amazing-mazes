@@ -10,7 +10,6 @@ def get_matrix_size():
     while True:
         try:
             n = int(input("Size : "))
-            print(type(n), "Le nombre n est égal à :", n)
             return n
         except Exception:
             print("To enter the map size please enter a number")
@@ -18,7 +17,6 @@ def get_matrix_size():
 
 def generate_basic_matrix(n):
     m = []
-    print(range(n * 2), type(n), "Print de NNNN")
     for _ in range(n * 2 + 1):
         m.append([CHAR_WALL] * (n * 2 + 1))
 
@@ -34,7 +32,6 @@ def generate_basic_matrix(n):
 def generate_maze(n):
     # La parti récursive doit pas être à chaque fois m
     m = generate_basic_matrix(n)
-    print(n, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     pos = [1, 1]
 
     def maze_rec(rank):
@@ -43,20 +40,21 @@ def generate_maze(n):
         random.shuffle(DIRECTIONS)
         for dx, dy in DIRECTIONS:
             new_pos = [pos[0] + dy, pos[1] + dx]
-            if valid_neighbor(m, new_pos[0], new_pos[1]) == True:
+            if valid_neighbor(m, new_pos[0], new_pos[1], rank) == True:
                 m[new_pos[0]][new_pos[1]] = CHAR_GROUND
                 m[(pos[0] + new_pos[0]) // 2][(pos[1] + new_pos[1]) // 2] = CHAR_GROUND
                 pos[0], pos[1] = new_pos[0], new_pos[1]
 
                 maze_rec(rank + 1)
+                return rank
 
     maze_rec(0)
     return m
 
 
-def valid_neighbor(m, x, y):
+def valid_neighbor(m, x, y, rank):
     matrix_size = len(m)
-    print(x, y, "XXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYYYYYYY")
+    print("Étape ", rank, " : posX : [", x,"]" "  posY : [", y,"]")
     return (
         1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and m[x][y] == CHAR_WALL
     )
