@@ -1,6 +1,5 @@
 import random
 
-# from colorama import Fore, Style
 CHAR_GROUND = "."
 CHAR_WALL = "#"
 DIRECTIONS = [(2, 0), (-2, 0), (0, -2), (0, 2)]
@@ -21,40 +20,50 @@ def generate_basic_matrix(n):
         m.append([CHAR_WALL] * (n * 2 + 1))
 
     # entrée et sortie
-    m[1][0] = CHAR_GROUND
+    # m[1][0] = CHAR_GROUND
     m[1][1] = CHAR_GROUND
     m[-2][-2] = CHAR_GROUND
-    m[-2][-1] = CHAR_GROUND
+    # m[-2][-1] = CHAR_GROUND
 
     return m
 
 
 def generate_maze(n):
-    # La parti récursive doit pas être à chaque fois m
     m = generate_basic_matrix(n)
     pos = [1, 1]
-
+    stack = [(pos[0], pos[1])]
+    
     def maze_rec(rank):
-        if pos == [n * 2, n * 2] or rank == 50:
-            return
-        random.shuffle(DIRECTIONS)
-        for dx, dy in DIRECTIONS:
-            new_pos = [pos[0] + dy, pos[1] + dx]
-            if valid_neighbor(m, new_pos[0], new_pos[1], rank) == True:
-                m[new_pos[0]][new_pos[1]] = CHAR_GROUND
-                m[(pos[0] + new_pos[0]) // 2][(pos[1] + new_pos[1]) // 2] = CHAR_GROUND
-                pos[0], pos[1] = new_pos[0], new_pos[1]
-
-                maze_rec(rank + 1)
-                return rank
+        print(stack)
+        
+        while stack:
+            if pos == [n * 2, n * 2] or rank == 50:
+                return
+            random.shuffle(DIRECTIONS)
+            
+            for dx, dy in DIRECTIONS:
+                new_pos = [pos[0] + dy, pos[1] + dx]
+                if valid_neighbor(m, new_pos[0], new_pos[1], rank) == True:
+                    m[new_pos[0]][new_pos[1]] = CHAR_GROUND
+                    m[(pos[0] + new_pos[0]) // 2][(pos[1] + new_pos[1]) // 2] = CHAR_GROUND
+                    pos[0], pos[1] = new_pos[0], new_pos[1]
+                    stack.append((new_pos[0], new_pos[1]))
+                    print(stack)
+                    maze_rec(rank + 1)
+                    return rank
+                
+                else:
+                    stack.pop()
+                    print(stack)
+                    maze_rec(rank + 1)
+                    return rank
 
     maze_rec(0)
     return m
 
-
 def valid_neighbor(m, x, y, rank):
     matrix_size = len(m)
-    print("Étape ", rank," : X [", x,"]" "  Y [", y,"]")
+    print("Étape ", rank, " : X [", x, "]" "  Y [", y, "]")
     return (
         1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and m[x][y] == CHAR_WALL
     )
