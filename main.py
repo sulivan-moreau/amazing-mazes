@@ -31,41 +31,40 @@ def generate_basic_matrix(n):
 def generate_maze(n):
     m = generate_basic_matrix(n)
     x, y = 1,1   
-    
+    n = len(m)
     def maze_rec(x, y, rank):
         print(m[2 * n -1][2 *n - 1])
-        if x == n * 2 - 1 and y == n * 2 - 1:
-            print("ENNNNDD")
-            return True
+        # if x == n * 2 - 1 and y == n * 2 - 1:
+        #     print("ENNNNDD")
+        #     return True
 
         random.shuffle(DIRECTIONS)
         m[x][y] = CHAR_GROUND
         
         for dx, dy in DIRECTIONS:
             new_pos = [x + dx, y+ dy]
-            if valid_neighbor(m, new_pos[0], new_pos[1], rank):
+            if is_valid_neighbor(m,n, new_pos[0], new_pos[1], rank):
 
                 m[x + dx // 2][y + dy // 2] = CHAR_GROUND
                 # pos[0], pos[1] = new_pos[0], new_pos[1]
                 if maze_rec(new_pos[0],new_pos[1],rank + 1):
-                    return True
+                    return
 
                 # return rank
             # elif new_pos == [n * 2-1 , n * 2-1]:
             #     m[new_pos[0] - dx // 2][new_pos[1] - dy // 2] = CHAR_GROUND
             #     print("sdfghjik")
-        return False
+        return      
     maze_rec(1, 1, 0)
     return m
 
-def valid_neighbor(m, x, y, rank):
-    matrix_size = len(m)
+def is_valid_neighbor(m, n, x, y, rank):
     # val = 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
     print("Étape ", rank, " : X=", x, ", Y=", y)
 
-    return (
-        0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
-    )
+    return (x == n * 2 and y == n * 2) or (0 <= x < n and 0 <= y < n and m[x][y] == CHAR_WALL)
+
+    # return 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
 
 
 def save_file(m):
