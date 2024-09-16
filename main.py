@@ -54,7 +54,7 @@ def generate_maze(n):
 
 def valid_neighbor(m, x, y, rank):
     matrix_size = len(m)
-    print("Étape ", rank, " : posX : [", x,"]" "  posY : [", y,"]")
+    print("Étape ", rank," : X [", x,"]" "  Y [", y,"]")
     return (
         1 <= x < matrix_size - 1 and 1 <= y < matrix_size - 1 and m[x][y] == CHAR_WALL
     )
