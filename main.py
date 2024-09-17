@@ -33,15 +33,9 @@ def generate_maze(n):
             y += 2
         x += 2
 
-    # for cell in m:
-    #     if cell == '.':
-    
-    # Parcourir la matrice ligne par ligne
     for row_idx, row in enumerate(m):
-        # Parcourir chaque élément de la ligne
         for col_idx, value in enumerate(row):
             if value == ".":
-                # Ajouter les coordonnées (ligne, colonne) des 'C' à la liste
                 cell.append((row_idx, col_idx))
                 print(cell)
 
