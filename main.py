@@ -33,7 +33,7 @@ def generate_maze(n):
     x, y = 1,1   
     n = len(m)
     def maze_rec(x, y, rank):
-        print(m[2 * n -1][2 *n - 1])
+        # print(m[2 * n -1][2 *n - 1])
         # if x == n * 2 - 1 and y == n * 2 - 1:
         #     print("ENNNNDD")
         #     return True
