@@ -2,6 +2,7 @@ import random
 
 CHAR_GROUND = "."
 CHAR_WALL = "#"
+DIRECTIONS = [(1, 0), (-1, 0), (0, -1), (0, 1)]
 
 
 def get_matrix_size():
@@ -21,7 +22,10 @@ def generate_basic_matrix(n):
 
 
 def generate_maze(n):
-    # for CHAR_WALL in m:
+    m = generate_basic_matrix(n)
+    for CHAR_WALL in m:
+        random.choice(CHAR_WALL)
+        random.shuffle(DIRECTIONS)
     return 
 
 
