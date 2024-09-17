@@ -23,11 +23,16 @@ def generate_basic_matrix(n):
 
 def generate_maze(n):
     m = generate_basic_matrix(n)
-    for CHAR_WALL in m:
-        random.choice(CHAR_WALL)
-        random.shuffle(DIRECTIONS)
-    return 
+    x, y = 1, 1
 
+    for i in range(n):
+        y = 1
+        m[x][y] = CHAR_GROUND
+        for i in range(n):
+            m[x][y] = CHAR_GROUND
+            y += 2
+        x += 2
+        
 
 
 def save_file(m):
