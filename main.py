@@ -24,7 +24,7 @@ def generate_basic_matrix(n):
 def generate_maze(n):
     m = generate_basic_matrix(n)
     x, y = 1, 1
-
+    cell = []
     for i in range(n):
         y = 1
         m[x][y] = CHAR_GROUND
@@ -32,8 +32,21 @@ def generate_maze(n):
             m[x][y] = CHAR_GROUND
             y += 2
         x += 2
-        
 
+    # for cell in m:
+    #     if cell == '.':
+    
+    # Parcourir la matrice ligne par ligne
+    for row_idx, row in enumerate(m):
+        # Parcourir chaque élément de la ligne
+        for col_idx, value in enumerate(row):
+            if value == ".":
+                # Ajouter les coordonnées (ligne, colonne) des 'C' à la liste
+                cell.append((row_idx, col_idx))
+                print(cell)
+
+    return m
+ 
 
 def save_file(m):
     file_name = input("Write the name of your map without spaces: ")
