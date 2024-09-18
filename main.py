@@ -16,13 +16,17 @@ def get_matrix_size():
 
 def generate_basic_matrix(n):
     m = []
-    for _ in range(n * 2 + 1):
-        m.append([CHAR_WALL] * (n * 2 + 1))
+    for _ in range(n):
+        m.append([CHAR_WALL] * (n))
 
     # entrée et sortie
     # m[1][0] = CHAR_GROUND
     m[1][1] = CHAR_GROUND
-    m[-2][-2] = CHAR_GROUND
+    m[-1][-1] = CHAR_GROUND
+    m[-2][-1] = CHAR_GROUND 
+    m[0][0] = CHAR_GROUND
+    m[1][0] = CHAR_GROUND
+    
     # m[-2][-1] = CHAR_GROUND
 
     return m
@@ -30,41 +34,43 @@ def generate_basic_matrix(n):
 
 def generate_maze(n):
     m = generate_basic_matrix(n)
-    x, y = 1,1   
+    x, y = 1, 1
     n = len(m)
+
     def maze_rec(x, y, rank):
         # print(m[2 * n -1][2 *n - 1])
-        # if x == n * 2 - 1 and y == n * 2 - 1:
-        #     print("ENNNNDD")
-        #     return True
+        #if x == n - 1 and y == n - 1:
+            #return True
 
         random.shuffle(DIRECTIONS)
         m[x][y] = CHAR_GROUND
-        
+
         for dx, dy in DIRECTIONS:
-            new_pos = [x + dx, y+ dy]
-            if is_valid_neighbor(m,n, new_pos[0], new_pos[1], rank):
+            new_pos = [x + dx, y + dy]
+            if is_valid_neighbor(m, n, new_pos[0], new_pos[1], rank):
 
                 m[x + dx // 2][y + dy // 2] = CHAR_GROUND
                 # pos[0], pos[1] = new_pos[0], new_pos[1]
-                if maze_rec(new_pos[0],new_pos[1],rank + 1):
+                if maze_rec(new_pos[0], new_pos[1], rank + 1):
                     return
 
                 # return rank
-            # elif new_pos == [n * 2-1 , n * 2-1]:
+            # elif new_pos == [n - 1, n - 1]:
             #     m[new_pos[0] - dx // 2][new_pos[1] - dy // 2] = CHAR_GROUND
             #     print("sdfghjik")
-        return      
+        return
+
     maze_rec(1, 1, 0)
     return m
+
 
 def is_valid_neighbor(m, n, x, y, rank):
     # val = 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
     print("Étape ", rank, " : X=", x, ", Y=", y)
 
-    return (x == n * 2 and y == n * 2) or (0 <= x < n and 0 <= y < n and m[x][y] == CHAR_WALL)
+    return 0 <= x < n and 0 <= y < n and m[x][y] == CHAR_WALL
 
-    # return 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
+    # return 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL (x == n - 1 and y == n - 1) or
 
 
 def save_file(m):
@@ -80,10 +86,10 @@ def print_maze(maze):
 
 
 def main():
-    n = get_matrix_size()
+    n = get_matrix_size() * 2 + 1
     maze = generate_maze(n)
     print_maze(maze)
-    # save_file(maze)
+    save_file(maze)
 
 
 if __name__ == "__main__":
