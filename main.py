@@ -18,59 +18,32 @@ def generate_basic_matrix(n):
     m = []
     for _ in range(n):
         m.append([CHAR_WALL] * (n))
-
-    # entrée et sortie
-    # m[1][0] = CHAR_GROUND
     m[1][1] = CHAR_GROUND
-    m[-1][-1] = CHAR_GROUND
     m[-2][-1] = CHAR_GROUND 
-    m[0][0] = CHAR_GROUND
-    m[1][0] = CHAR_GROUND
-    
-    # m[-2][-1] = CHAR_GROUND
-
     return m
 
 
 def generate_maze(n):
     m = generate_basic_matrix(n)
     x, y = 1, 1
-    n = len(m)
+    n = len(m) # Utile ? 
 
-    def maze_rec(x, y, rank):
-        # print(m[2 * n -1][2 *n - 1])
-        #if x == n - 1 and y == n - 1:
-            #return True
-
+    def maze_rec(x, y):
         random.shuffle(DIRECTIONS)
         m[x][y] = CHAR_GROUND
-
         for dx, dy in DIRECTIONS:
             new_pos = [x + dx, y + dy]
-            if is_valid_neighbor(m, n, new_pos[0], new_pos[1], rank):
-
+            if is_valid_neighbor(m, n, new_pos[0], new_pos[1]):
                 m[x + dx // 2][y + dy // 2] = CHAR_GROUND
-                # pos[0], pos[1] = new_pos[0], new_pos[1]
-                if maze_rec(new_pos[0], new_pos[1], rank + 1):
+                if maze_rec(new_pos[0], new_pos[1]):
                     return
-
-                # return rank
-            # elif new_pos == [n - 1, n - 1]:
-            #     m[new_pos[0] - dx // 2][new_pos[1] - dy // 2] = CHAR_GROUND
-            #     print("sdfghjik")
         return
-
-    maze_rec(1, 1, 0)
+    maze_rec(1, 1) # pq (1, 1) et pas (x, y)?
     return m
 
 
-def is_valid_neighbor(m, n, x, y, rank):
-    # val = 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL
-    print("Étape ", rank, " : X=", x, ", Y=", y)
-
+def is_valid_neighbor(m, n, x, y):
     return 0 <= x < n and 0 <= y < n and m[x][y] == CHAR_WALL
-
-    # return 0 <= x < matrix_size and 0 <= y < matrix_size and m[x][y] == CHAR_WALL (x == n - 1 and y == n - 1) or
 
 
 def save_file(m):
