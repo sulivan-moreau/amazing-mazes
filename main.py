@@ -8,7 +8,6 @@ CHAR_FAKE = "*"
 DIRECTIONS = [(2, 0), (-2, 0), (0, -2), (0, 2)]
 DIRECTIONS_SOLVER = [(1, 0), (-1, 0), (0, -1), (0, 1)]
 
-
 def get_matrix_size():
     while True:
         try:
@@ -22,98 +21,87 @@ def generate_basic_matrix(n):
     m = []
     for _ in range(n):
         m.append([CHAR_WALL] * (n))
-
     m[1][1] = CHAR_GROUND
-    m[-1][-1] = CHAR_GROUND
     m[-2][-1] = CHAR_GROUND 
-    m[0][0] = CHAR_GROUND
-    m[1][0] = CHAR_GROUND
-
     return m
+
 
 def generate_maze(n):
     m = generate_basic_matrix(n)
-    x, y = 0, 0
-    n = len(m)
+    x, y = 1, 1
+    n = len(m) # Utile ? 
 
     def maze_rec(x, y):
-
         random.shuffle(DIRECTIONS)
         m[x][y] = CHAR_GROUND
-
         for dx, dy in DIRECTIONS:
             new_pos = [x + dx, y + dy]
             if is_valid_neighbor(m, n, new_pos[0], new_pos[1]):
-
                 m[x + dx // 2][y + dy // 2] = CHAR_GROUND
                 if maze_rec(new_pos[0], new_pos[1]):
                     return
         return
-
-    maze_rec(1, 1)
+    maze_rec(1, 1) # pq (1, 1) et pas (x, y)?
     return m
+
 
 def is_valid_neighbor(m, n, x, y):
     return 0 <= x < n and 0 <= y < n and m[x][y] == CHAR_WALL
 
+
 def save_file(m):
     file_name = input("Write the name of your map without spaces: ")
-    with open(f"{file_name}.txt", "a") as file:
+    with open(f"{file_name}.txt", "w") as file:
         for ligne in m:
             file.write("".join(ligne) + "\n")
+            
+def print_maze(maze):
+    for line in maze:
+        print(" ".join(line))
 
-
-        
-###############################################################################################
-
-
+###############################################################################
 def is_valid_way(m, n, x, y):
-    # if m[x][y] == CHAR_FAKE
     return 0 <= x < n and 0 <= y < n and m[x][y] == CHAR_GROUND
-    
-def solve_maze(maze, n):
-    m = generate_maze(n)
-    l=[]
-    x, y = 0, 0
-    
-    def solve_rec(x, y):
-        if x == n - 2 and y == n - 2:
-            m[x][y] = CHAR_WAY
-            return False
 
-        random.shuffle(DIRECTIONS_SOLVER)
+
+def solve_maze(maze, n):
+    m = maze
+    x, y = 1, 0
+    n = len(m) # Utile ?
+
+    def solve_rec(x, y):
+        if x == n - 2 and y == n - 1:
+            m[x][y] = CHAR_WAY
+            return True
+
         m[x][y] = CHAR_WAY
+
         for dx, dy in DIRECTIONS_SOLVER:
             new_pos = [x + dx, y + dy]
-            print("x="x, "y="y, "dx="dx, "dy="dy)
-            if is_valid_way(m, n, new_pos[0], new_pos[1]) and not (x == n - 2 and y == n - 2):
-                # if not solve_rec(new_pos[0], new_pos[1]):
-                    # return False
-                solve_rec(new_pos[0], new_pos[1])
- 
-    solve_rec(x,y)
-    return m 
+            if is_valid_way(m, n, new_pos[0], new_pos[1]):
+                if solve_rec(new_pos[0], new_pos[1]):
+                    return True
 
-# def fake_way(m, n, x, y):
-#     while not is_valid_way():
-#         m[x][y] = CHAR_FAKE
-#         l.pop(1)
-#         return 
+        m[x][y] = CHAR_FAKE
+        return False
 
-def print_maze_solve(solver):
-    for line in solver:
+    solve_rec(x, y) # Marche aussi avec (x, y) ?
+    return m
+
+
+def print_maze_solve(m):
+    for line in m:
         print(" ".join(line))
-        
-###############################################################################################
 
 
 def main():
     n = get_matrix_size() * 2 + 1
     maze = generate_maze(n)
+    print_maze(maze)
+    save_file(maze)
     solver_maze = solve_maze(maze, n)
     print_maze_solve(solver_maze)
-    #save_file(maze)
-    
+    save_file(solver_maze)
 
 
 if __name__ == "__main__":
