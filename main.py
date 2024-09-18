@@ -40,7 +40,17 @@ def generate_maze(n):
                 print(cell)
 
     return m
- 
+# Sert a définir un id dans 
+def init_sets(n):
+    l = []
+    for id in range(n**2):
+        l.append([id + 1])
+    return l
+
+def merge_sets():
+    a
+# Fonction qui prend sa en paramètres en qui retourne sa.
+
 
 def save_file(m):
     file_name = input("Write the name of your map without spaces: ")
