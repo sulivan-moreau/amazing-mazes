@@ -15,9 +15,7 @@ def get_matrix_size():
 
 
 def generate_basic_matrix(n):
-    m = []
-    for _ in range(n * 2 + 1):
-        m.append([CHAR_WALL] * (n * 2 + 1))
+    m = [[CHAR_WALL] * (n * 2 + 1) for _ in range(n * 2 + 1)]
     return m
 
 
@@ -25,10 +23,10 @@ def generate_maze(n):
     m = generate_basic_matrix(n)
     x, y = 1, 1
     cell = []
-    for i in range(n):
+    for _ in range(n):
         y = 1
         m[x][y] = CHAR_GROUND
-        for i in range(n):
+        for _ in range(n):
             m[x][y] = CHAR_GROUND
             y += 2
         x += 2
@@ -38,7 +36,7 @@ def generate_maze(n):
             if value == ".":
                 cell.append((row_idx, col_idx))
                 print(cell)
-
+    print(random.choice(cell))
     return m
  
 
