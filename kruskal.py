@@ -23,7 +23,7 @@ def generate_maze(n):
         for y in range(1, n * 2, 2):
             m[x][y] = CHAR_GROUND
             cells.append((x, y))
-            
+
     def get_neighbors(cell):
         x, y = cell
         neighbors = []
@@ -32,7 +32,7 @@ def generate_maze(n):
             if 0 < nx < len(m) - 1 and 0 < ny < len(m[0]) - 1:
                 neighbors.append((nx, ny))
         return neighbors
-            
+
     return m
 
 def print_maze(maze):
