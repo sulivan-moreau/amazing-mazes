@@ -29,8 +29,7 @@ def generate_basic_matrix(n):
 def generate_maze(n):
     m = generate_basic_matrix(n)
     x, y = 1, 1
-    n = len(m) # Utile ? 
-
+    
     def maze_rec(x, y):
         random.shuffle(DIRECTIONS)
         m[x][y] = CHAR_GROUND
@@ -41,7 +40,7 @@ def generate_maze(n):
                 if maze_rec(new_pos[0], new_pos[1]):
                     return
         return
-    maze_rec(1, 1) # pq (1, 1) et pas (x, y)?
+    maze_rec(x, y)
     return m
 
 
@@ -67,7 +66,6 @@ def is_valid_way(m, n, x, y):
 def solve_maze(maze, n):
     m = maze
     x, y = 1, 0
-    n = len(m) # Utile ?
 
     def solve_rec(x, y):
         if x == n - 2 and y == n - 1:
@@ -85,7 +83,7 @@ def solve_maze(maze, n):
         m[x][y] = CHAR_FAKE
         return False
 
-    solve_rec(x, y) # Marche aussi avec (x, y) ?
+    solve_rec(x, y) 
     return m
 
 
