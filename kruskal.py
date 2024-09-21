@@ -26,12 +26,12 @@ def generate_maze(n):
             for y in range(1, n * 2, 2):
                 m[x][y] = CHAR_GROUND
                 groups.append({(x, y)})
+                #print("groups dans build_groups:" , groups)
                 cells.append((x,y))
     build_groups()
-    #print("groups : ", groups)
 
     def get_neighbors(cell):
-        x, y = cell[0],cell[1]
+        x, y = cell[0], cell[1]
         neighbors = []
         for dx, dy in DIRECTIONS:
             nx, ny = x + dx * 2, y + dy * 2
@@ -43,17 +43,24 @@ def generate_maze(n):
         for group in groups:
             for ce in group:
                 if ce == cell:
+                    #print("qu’est-ce que group dans la fonction get_cell_group : ", group)
                     return group
-        #print("cell : ", cell)
+                    
                 
 
-    def belong_to_same_group(cell_1,cell_2):
+    def belong_to_same_group(cell_1, cell_2):
+        #print("cell1_belong DPD : ", cell_1)
+        #print("cell2_belong neighbor: ", cell_2)
         group_1 = get_cell_group(cell_1)
         group_2 = get_cell_group(cell_2)
+        #print("group 1 dans belong_to_same_group : ", group_1)
+        #print("group 2 dans belong_to_same_group : ", group_2)
         return group_1 == group_2
 
     def merge_groups(group_1, group_2):
-        print("groupe1: ", group_1)
+        #print("groupe1: ", group_1)
+        #print("groupe2: ", group_2)
+        
         return group_1.union(group_2)
     
     def kruskal_generation():
@@ -67,23 +74,21 @@ def generate_maze(n):
                 if not belong_to_same_group(cell, neighbor):
                     group1 = get_cell_group(cell)
                     group2 = get_cell_group(neighbor)
-                    print(group1, group2)
-                    group1 = merge_groups(group1, group2)
+                    #print("group 1 cell après kruskal génération : ",group1, "group 2 neighbor après kruskal génération : ", group2)
+                    group_3 = merge_groups(group1, group2) # plus simple avec un 3eme groupe ##ERREUUUUUUUUUUUR!!!!!!!!!!!!!!
+                    #print("group 1 après merge de kruskal: ", group_3)
+                    groups[groups.index(group1)]= group_3 # ajout pour modifier groups ##ERREUUUUUUUUUUUR!!!!!!!!!!!!!!
                     groups.remove(group2)
+                    #print("groups après kruskal: ", groups)
+                    apply_to_map(cell, neighbor) # On a oublié de l'appeler !!!!!!!!!
 
-    def apply_to_map(group):
-        x1, y1 = group[0],group[1]
-        x2, y2 = group[2],group[3]
-
+    def apply_to_map(cell1, cell2):
+        x1, y1 = cell1
+        x2, y2 = cell2
         mx, my = (x1 + x2) // 2, (y1 + y2) // 2
         m[mx][my] = CHAR_GROUND
-        for line in m:
-            print(" ".join(line))
-        return m
-    
-    
+        
     kruskal_generation()
-    # merge_groups(cells)
     return m
 
 def print_maze(maze):
