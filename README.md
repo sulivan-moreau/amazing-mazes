@@ -4,7 +4,6 @@
 
 - [Table des matières](#table-des-matières)
   - [L'équipe](#léquipe)
-  - [Download requirements](#download-requirements)
   - [Contexte](#contexte)
 
 ## L'équipe
@@ -26,15 +25,6 @@
   <img src="img/github.png" width=25>
   </a>
 
-## Download requirements
-
-Installer la librairie nécessaire pour le bon fonctionnement du projet :
-
-- Cela permet d’ajouter de la couleur dans le terminal.
-
-```sh
-pip install colorama
-```
 
 ## Contexte
 

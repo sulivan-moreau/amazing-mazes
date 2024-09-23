@@ -95,12 +95,10 @@ def print_maze(maze):
     for line in maze:
         print(" ".join(line))
 
-def main():
+def main_kruskal():
     n = get_matrix_size()
     maze = generate_maze(n)
     print_maze(maze)
 
 if __name__ == "__main__":
-    print("---------------------------------------------------------------------------------")
-    main()
-    print("---------------------------------------------------------------------------------")
+    main_kruskal()

@@ -92,7 +92,7 @@ def print_maze_solve(m):
         print(" ".join(line))
 
 
-def main():
+def main_backtracking():
     n = get_matrix_size() * 2 + 1
     maze = generate_maze(n)
     print_maze(maze)
@@ -101,6 +101,5 @@ def main():
     print_maze_solve(solver_maze)
     save_file(solver_maze)
 
-
 if __name__ == "__main__":
-    main()
+    main_backtracking()
