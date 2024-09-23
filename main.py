@@ -1,8 +1,9 @@
-# import backtracking
+from backtracking import main
 
-# file_choice = input("1 : Backtracking , 2 : Kruskal")
+file_choice = input("1 : Backtracking , 2 : Kruskal  :  ")
 
-# if input== "1":
-#     main()
-# elif input=="2":
+if file_choice == "1":
+    main()
+
+# elif file_choice == "2":
     
